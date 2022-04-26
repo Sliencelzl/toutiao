@@ -1,6 +1,7 @@
 <template>
    <van-cell
     class="article-item"
+    :to="'/article/'+ item.art_id"
   >
     <div slot="title" class="title">{{ item.title }}</div>
     <div slot="label">

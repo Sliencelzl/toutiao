@@ -45,3 +45,20 @@ export const getChannels = () => {
         url:'/v1_0/channels'
     })
 }
+
+export const addUser = target => {
+    return request({
+        method:'POST',
+        url:'/v1_0/user/followings',
+        data:{
+            target
+        }
+    })
+}
+
+export const deleteUser = target => {
+    return request({
+        method:'DELETE',
+        url:`/v1_0/user/followings/${target}`,
+    })
+}
