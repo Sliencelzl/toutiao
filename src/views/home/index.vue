@@ -9,6 +9,7 @@
         round
         icon="search"
         slot="title"
+        to="/search"
         >搜索</van-button
       >
     </van-nav-bar>
@@ -35,13 +36,17 @@
 
     <!-- 弹出层 -->
     <van-popup
-        v-model="modelShow"
-        closeable
-        position="bottom"
-        close-icon-position="top-left"
-        :style="{ height: '100%' }"
+      v-model="modelShow"
+      closeable
+      position="bottom"
+      close-icon-position="top-left"
+      :style="{ height: '100%' }"
     >
-      <channel-edit/>
+      <channel-edit
+        :mychannel="channelInfo"
+        :active="active"
+        @Update_active="onUpdateActive"
+      />
     </van-popup>
     <!-- 弹出层结束 -->
   </div>
@@ -50,16 +55,21 @@
 <script>
 import { getChannels } from "../../api/user";
 import ArticlePage from "../home/components/article.vue";
-import ChannelEdit from "../home/components/channels-edit.vue"
+import ChannelEdit from "../home/components/channels-edit.vue";
+import { mapState } from "vuex";
+import { getItem } from "../../Utils/storage";
 export default {
   name: "HomeContainer",
-  components: { ArticlePage ,ChannelEdit },
+  components: { ArticlePage, ChannelEdit },
   data() {
     return {
       active: 0,
-      modelShow:true,
+      modelShow: false,
       channelInfo: [],
     };
+  },
+  computed: {
+    ...mapState(["user"]),
   },
   created() {
     this.getChannelsInfo();
@@ -67,11 +77,30 @@ export default {
   methods: {
     async getChannelsInfo() {
       try {
-        const { data } = await getChannels();
-        this.channelInfo = data.data.channels;
+        let channels = [];
+        if (this.user) {
+          const { data } = await getChannels();
+          channels = data.data.channels;
+        } else {
+          const localChannels = getItem("TOUTIAO_ADDCHANNEL");
+          if (localChannels) {
+            channels = localChannels;
+          } else {
+            const { data } = await getChannels();
+            channels = data.data.channels;
+          }
+        }
+        this.channels = channels;
+        this.channelInfo = channels;
       } catch (error) {
         this.$toast.fail("获取失败，请稍后重试");
       }
+    },
+
+    onUpdateActive(index, ismodeshow = true) {
+      console.log("home", index);
+      this.active = index;
+      this.modelShow = ismodeshow;
     },
   },
 };

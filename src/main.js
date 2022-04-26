@@ -8,7 +8,7 @@ import 'amfe-flexible'//加载动态设置rem的基准值
 import './Utils/dayjs'
 import {
   Button, NavBar, Tab, Tabs, Form, Field, CellGroup, Toast, CountDown, Tabbar,
-  TabbarItem, Image as VanImage, Grid, GridItem, Cell, Dialog, List, PullRefresh,Popup
+  TabbarItem, Image as VanImage, Grid, GridItem, Cell, Dialog, List, PullRefresh,Popup,Icon, Search 
 } from 'vant'
 
 Vue.use(Button)
@@ -30,6 +30,8 @@ Vue.use(Tabs)
 Vue.use(List)
 Vue.use(PullRefresh)
 Vue.use(Popup)
+Vue.use(Icon)
+Vue.use(Search)
 
 Vue.config.productionTip = false
 
