@@ -20,7 +20,7 @@ const routes = [
         name: 'home',
         component: () => import('@/views/home')
       },
-      {
+      /* {
         path: '/quan',
         name: 'quan',
         component: () => import('@/views/quan')
@@ -29,7 +29,7 @@ const routes = [
         path: '/video',
         name: 'video',
         component: () => import('@/views/video')
-      },
+      }, */
       {
         path: '/my',
         name: 'my',
@@ -47,6 +47,11 @@ const routes = [
     name:'article',
     component:() => import('../views/article'),
     props:true
+  },
+  {
+    path:'/userInfo',
+    name:'userinfo',
+    component:() => import('../views/user-profile/index.vue')
   }
 ]
 

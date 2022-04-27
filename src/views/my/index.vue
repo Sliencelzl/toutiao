@@ -12,7 +12,7 @@
           <span class="name">{{ userInfo.name }}</span>
         </div>
         <div class="right">
-          <van-button type="default" round size="mini">编辑资料</van-button>
+          <van-button type="default" round size="mini" @click="goUserinfo">编辑资料</van-button>
         </div>
       </div>
       <div class="data-stats">
@@ -105,6 +105,9 @@ export default {
       } catch (error) {
         this.$toast.fail('获取数据失败，请稍后重试')
       }
+    },
+    goUserinfo(){
+      this.$router.push('/userinfo')
     }
   },
 };

@@ -108,7 +108,7 @@ export default {
 
 <style lang="less" scoped>
 .home_container {
-  padding-bottom: 100px;
+  padding-bottom: 50px;
   padding-top: 92px;
 }
 .van-nav-bar {

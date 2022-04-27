@@ -41,11 +41,17 @@
         ></div>
         <van-divider>正文结束</van-divider>
 
+        <comment-list :source="article.art_id" @onload-sucess="totalComment = $event.total_count" :list="commentlist" @reply-click="onReplyclick"/>
+
         <div class="article-bottom">
-          <van-button class="comment-btn" type="default" round size="small"
+          <van-button class="comment-btn" type="default" round size="small" @click="isPostshow = true"
             >写评论</van-button
           >
-          <van-icon name="comment-o" badge="123" color="#777" />
+          <van-popup v-model="isPostshow" position="bottom" >
+            <comment-post :target="article.art_id" @post-success="onPostsuccess"/>
+          </van-popup>
+
+          <van-icon name="comment-o" :badge="totalComment" color="#777" />
 
           <article-collect v-model="article.is_collected" :article-id = "article.art_id"/>
 
@@ -68,6 +74,10 @@
         >
       </div>
     </div>
+
+    <van-popup  v-model="isReplayshow" position="bottom" :style="{ height: '100%' }" >
+      <comment-reply v-if="isReplayshow" :comment="currentComment" @close="isReplayshow = false"/>
+    </van-popup>
   </div>
 </template>
 
@@ -78,9 +88,12 @@ import { ImagePreview } from "vant";
 /* import { mapState } from "vuex"; */
 import ArticleCollect from "../article/article_collect/index.vue";
 import ArticleLike from "../article/article_like/index.vue";
+import CommentList from "../article/article_comment/index.vue";
+import CommentPost from "../../components/comment-post.vue/index.vue";
+import CommentReply from "../../views/article/article_reply/index.vue"
 export default {
   name: "ArticlePage",
-  components: { FllowUser, ArticleCollect ,ArticleLike},
+  components: { FllowUser, ArticleCollect ,ArticleLike,CommentList,CommentPost,CommentReply},
   props: {
     articleId: {
       type: [Number, String, Object],
@@ -93,6 +106,11 @@ export default {
       loading: true, //加载中的loading状态
       errStatus: 0,
       Fllowloading: false,
+      totalComment:0,
+      isPostshow:false,
+      isReplayshow:false,
+      commentlist:[],
+      currentComment:{}
     };
   },
   computed: {
@@ -139,6 +157,14 @@ export default {
         };
       });
     },
+    onPostsuccess(data){
+      this.isPostshow = false
+      this.commentlist.unshift(data.new_obj)
+    },
+    onReplyclick(comment){
+      this.currentComment = comment
+      this.isReplayshow = true
+    }
   },
 };
 </script>

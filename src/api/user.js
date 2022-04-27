@@ -45,7 +45,11 @@ export const getChannels = () => {
         url:'/v1_0/channels'
     })
 }
-
+/**
+ * 添加收藏
+ * @param {*} target 
+ * @returns 
+ */
 export const addUser = target => {
     return request({
         method:'POST',
@@ -56,9 +60,44 @@ export const addUser = target => {
     })
 }
 
+/**
+ * 取消收藏
+ * @param {*} target 
+ * @returns 
+ */
 export const deleteUser = target => {
     return request({
         method:'DELETE',
         url:`/v1_0/user/followings/${target}`,
+    })
+}
+
+/**
+ * 获取用户个人资料
+ * @returns 
+ */
+export const getUserInfoprofile = () => {
+    return request({
+        method:'GET',
+        url:'/v1_0/user/profile'
+    })
+}
+
+/**
+ * 修改用户资料
+ * @returns 
+ */
+export const updateUserprofile = () => {
+    return request({
+        method:'PATCH',
+        url:'/v1_0/user/profile'
+    })
+}
+
+export const updateUserPhoto = data => {
+    return request({
+        method:'PATCH',
+        url:'/v1_0/user/photo',
+        data
     })
 }

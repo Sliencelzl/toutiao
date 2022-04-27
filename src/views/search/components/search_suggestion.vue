@@ -6,7 +6,7 @@
         :key="index"
         @click="$emit('search',text)"
     >
-    <div slot="title" v-html="light(text)"></div>
+    <div slot="title" v-html="text"></div>
     </van-cell>
   </div>
 </template>
@@ -37,11 +37,14 @@ export default {
         }
     },
     /* 高亮 */
-    light(text){
+    if(text){
         const reg = new RegExp(this.searchText,'gi')
         const hightlighttext = `<span class="active">${this.searchText}</span>`
         return text.replace(reg,hightlighttext)
-    } 
+    }
+    /* light(){
+        
+    }  */
   },
   watch: {
     searchText: {
