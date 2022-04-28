@@ -6,6 +6,11 @@ Vue.use(VueRouter)
 // 路由表
 const routes = [
   {
+    path:'/',
+    name:'/openScreen',
+    component:()=>import('../views/openScreen.vue')
+  },
+  {
     path: '/login',
     name: 'login',
     component: () => import('@/views/login')
